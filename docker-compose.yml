@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  postgres-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: hn-scraper
+      POSTGRES_PASSWORD: Scraper123
+      POSTGRES_DB: hn-scraper
+    ports:
+      - "54324:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/hn-scraper-data
+volumes:
+  db_data:
