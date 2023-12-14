@@ -20,23 +20,27 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async getPosts() {
-    const posts = await this.postsRepository.find();
+  async getPosts(): Promise<Record<string, any[]>> {
+    const posts = await this.postsRepository.find({
+      order: {
+        lastUpdatedOn: 'DESC',
+      },
+    });
     const groupedPosts = {
-      '[0-100]': [],
-      '[101-200]': [],
-      '[201-300]': [],
-      '[301-n]': [],
+      '0-100': [],
+      '101-200': [],
+      '201-300': [],
+      '301-n': [],
     };
     posts.forEach((post) => {
       if (post.comments >= 0 && post.comments <= 100) {
-        groupedPosts['[0-100]'].push(post);
+        groupedPosts['0-100'].push(post);
       } else if (post.comments >= 101 && post.comments <= 200) {
-        groupedPosts['[101-200]'].push(post);
+        groupedPosts['101-200'].push(post);
       } else if (post.comments >= 201 && post.comments <= 300) {
-        groupedPosts['[201-300]'].push(post);
+        groupedPosts['201-300'].push(post);
       } else {
-        groupedPosts['[301-n]'].push(post);
+        groupedPosts['301-n'].push(post);
       }
     });
 
@@ -93,6 +97,10 @@ export class AppService {
         .first()
         .text();
       const url = $(element).find('.titleline a').attr('href');
+      const lastUpdatedOn = $(element)
+        .next()
+        .find('.subtext .age')
+        .attr('title');
       const commentsText = $(element)
         .next()
         .find('.subtext a:last-child')
@@ -114,6 +122,7 @@ export class AppService {
       const post = {
         id,
         title,
+        lastUpdatedOn,
         url,
         comments,
       };

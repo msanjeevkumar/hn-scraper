@@ -27,6 +27,7 @@
     "@nestjs/typeorm": "^10.0.1",
     "axios": "^1.6.2",
     "cheerio": "^1.0.0-rc.12",
+    "exceljs": "^4.4.0",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",

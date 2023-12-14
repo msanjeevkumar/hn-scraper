@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Post {
@@ -13,4 +13,14 @@ export class Post {
 
   @Column()
   comments: number;
+
+  @Column({
+    type: 'timestamp',
+    name: 'last_updated_on',
+    transformer: {
+      to: (value: Date) => value, // Custom transformation logic when saving to the database
+      from: (value: string) => new Date(value), // Custom transformation logic when retrieving from the database
+    },
+  })
+  lastUpdatedOn: string;
 }
